@@ -11,7 +11,7 @@ type ModalTypes = "add" | "edit" | null;
 const initialState: any = {
   isLoading: false,
   error: null,
-  stories: [],
+  data: [],
 };
 export const counterSlice = createSlice({
   name: "counter",
@@ -34,7 +34,7 @@ export const counterSlice = createSlice({
     },
     getStoriesSuccess: (state, action) => {
       state.isLoading = false;
-      state.stories = action.payload;
+      state.data = action.payload;
     },
     getStoriesError: (state, action) => {
       state.isLoading = false;

@@ -9,13 +9,10 @@ import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
-import video1 from "../../assets/1.mp4";
-import video2 from "../../assets/2.mp4";
-import video3 from "../../assets/3.mp4";
-import video4 from "../../assets/4.mp4";
 import Typography from "@mui/material/Typography";
-import { Badge, Box, CardActionArea, Chip } from "@mui/material";
+import { Badge, Box, CardActionArea, Chip, Link } from "@mui/material";
 import CustomizedMenus from "./CardMenu";
+import moment from "moment";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -30,21 +27,49 @@ const tags = [
   "Responsible Gambling",
 ];
 
-export default function StoryCard() {
+interface StoryDetails {
+  title: string;
+  contentUrl: string;
+  contentType: string;
+  tags: string[];
+  displayBefore: string;
+  displayAfter: string;
+  videoPath: string;
+  likesCount: number;
+  viewsCount: number;
+  dislikesCount: number;
+}
+
+interface StoryCardProps {
+  storyDetails: StoryDetails;
+}
+
+export default function StoryCard(props: StoryCardProps) {
+  const {
+    storyDetails: {
+      title,
+      tags,
+      videoPath,
+      contentType,
+      displayBefore,
+      contentUrl,
+      likesCount,
+    },
+  } = props;
   return (
     <Card elevation={3} sx={{ width: 345, borderRadius: "12px" }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
-            R
+            {contentType[0] + contentType[1]}
           </Avatar>
         }
         action={<CustomizedMenus />}
-        title='Super Bowl'
-        subheader='September 14, 2016'
+        title={title}
+        subheader={moment(displayBefore).format("DD MMMM, YYYY")}
       />
       <CardActionArea>
-        <CardMedia controls component='video' height='394' src={video3} />
+        <CardMedia controls component='video' height='394' src={videoPath} />
       </CardActionArea>
       <CardContent>
         {tags.map((value) => (
@@ -57,13 +82,20 @@ export default function StoryCard() {
             sx={{ margin: "3px" }}
           />
         ))}
-        <Typography variant='body2' color='text.primary'>
-          PROMO
+        <Typography variant='body2' py={1} color='text.primary'>
+          <Link href={contentUrl}> {contentUrl}</Link>
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label='add to favorites'>
-          <FavoriteIcon />
+          <Badge
+            badgeContent={likesCount}
+            color='info'
+            sx={{
+              padding: "2px",
+            }}>
+            <FavoriteIcon />
+          </Badge>
         </IconButton>
         <IconButton aria-label='share'>
           <ShareIcon />

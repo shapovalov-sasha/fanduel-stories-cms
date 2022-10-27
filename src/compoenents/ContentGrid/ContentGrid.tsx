@@ -1,10 +1,13 @@
 import React from "react";
 import { Box, Stack } from "@mui/material";
 import StoryCard from "../StoryCard/StoryCard";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const test = [1, 2, 3, 4, 5, 6];
 
 export default function ContentGrid() {
+  const stories = useSelector((state: RootState) => state.stories.data);
   return (
     <Stack
       sx={{
@@ -13,8 +16,8 @@ export default function ContentGrid() {
         flexWrap: "wrap",
         gap: 5,
       }}>
-      {test.map(() => (
-        <StoryCard />
+      {stories.map((item: any) => (
+        <StoryCard key={item.storyId} storyDetails={item} />
       ))}
     </Stack>
   );
