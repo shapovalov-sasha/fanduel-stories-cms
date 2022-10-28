@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../store";
 
 type ModalTypes = "add" | "edit" | null;
 
@@ -31,7 +30,10 @@ interface AppState {
       type: ModalTypes;
       isOpen: boolean;
     };
-    storyDetailsForm: FileDetails | null;
+    storyDetailsForm: {
+      data: FileDetails | null;
+      isValid: boolean;
+    };
   };
 }
 
@@ -42,7 +44,10 @@ const initialState: AppState = {
       type: null,
       isOpen: false,
     },
-    storyDetailsForm: initialFormValues,
+    storyDetailsForm: {
+      data: initialFormValues,
+      isValid: false,
+    },
   },
 };
 
@@ -61,8 +66,8 @@ export const counterSlice = createSlice({
       state.ui.modal.type = null;
     },
     setFormDetails: (state, action: PayloadAction<Partial<FileDetails>>) => {
-      state.ui.storyDetailsForm = {
-        ...state.ui.storyDetailsForm,
+      state.ui.storyDetailsForm.data = {
+        ...state.ui.storyDetailsForm.data,
         ...action.payload,
       } as FileDetails;
     },

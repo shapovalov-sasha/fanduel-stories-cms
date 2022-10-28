@@ -14,10 +14,6 @@ import { Badge, Box, CardActionArea, Chip, Link } from "@mui/material";
 import CustomizedMenus from "./CardMenu";
 import moment from "moment";
 
-interface ExpandMoreProps extends IconButtonProps {
-  expand: boolean;
-}
-
 const tags = [
   "Sport",
   "NBA",

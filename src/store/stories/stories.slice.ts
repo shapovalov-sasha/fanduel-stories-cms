@@ -62,7 +62,6 @@ export const uploadStory =
   async (dispatch: any, getState: any): Promise<any> => {
     dispatch(uploadFileStart());
     const fileDetails = getState().app.ui.storyDetailsForm;
-    console.log({ fileDetails });
     const result = await axios.post(
       "http://fanduelstories-env.eba-dayypway.us-east-1.elasticbeanstalk.com/stories",
       {
@@ -85,11 +84,6 @@ export const getStories =
     try {
       const result = await axios.get(
         "http://fanduelstories-env.eba-dayypway.us-east-1.elasticbeanstalk.com/stories"
-        // {
-        //   headers: {
-        //     "Content-Type": "multipart/form-data",
-        //   },
-        // }
       );
       dispatch(getStoriesSuccess(result.data));
     } catch (e: any) {
